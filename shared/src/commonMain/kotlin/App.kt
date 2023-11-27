@@ -1,38 +1,42 @@
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.Color
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.FadeTransition
 
-@OptIn(ExperimentalResourceApi::class)
+object FairDashColors {
+    val WHITE = Color(0xFFEAEAEA)
+    val BACKGROUND = Color(0xFF333333)
+    val ERROR = Color(0xFFFF0000)
+    val WARNING = Color(0xFFFFE57F)
+    val PRIMARY = Color(0xFF009FB7)
+}
+
+
 @Composable
 fun App() {
-    MaterialTheme {
-        var greetingText by remember { mutableStateOf("Hello, World!") }
-        var showImage by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = {
-                greetingText = "Hello, ${getPlatformName()}"
-                showImage = !showImage
-            }) {
-                Text(greetingText)
-            }
-            AnimatedVisibility(showImage) {
-                Image(
-                    painterResource("compose-multiplatform.xml"),
-                    null
-                )
+    Box(modifier = Modifier.background(FairDashColors.BACKGROUND)) {
+        MaterialTheme(
+            colors = MaterialTheme.colors.copy(
+                primary = FairDashColors.PRIMARY,
+                secondary = FairDashColors.PRIMARY,
+                background = FairDashColors.BACKGROUND,
+                surface = FairDashColors.WHITE,
+                onPrimary = FairDashColors.WHITE,
+                onSecondary = FairDashColors.WHITE,
+                onBackground = FairDashColors.WHITE,
+                onSurface = FairDashColors.WHITE,
+                error = FairDashColors.ERROR,
+                primaryVariant = FairDashColors.PRIMARY,
+                secondaryVariant = FairDashColors.PRIMARY
+            )
+        )
+        {
+            Navigator(LoginScreen) {
+                FadeTransition(it)
             }
         }
     }

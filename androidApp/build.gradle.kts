@@ -4,6 +4,10 @@ plugins {
     id("org.jetbrains.compose")
 }
 
+dependencies {
+    implementation(libs.kotlinx.coroutines.android)
+}
+
 kotlin {
     androidTarget()
     sourceSets {
