@@ -25,14 +25,25 @@ kotlin {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
+                //https://fonts.google.com/icons
+                implementation(compose.materialIconsExtended)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+
                 implementation(libs.kotlinx.serialization.json)
-                implementation(libs.ktor.client.core)
                 implementation(libs.kotlinx.coroutines.core)
+
+                implementation(libs.ktor.client.core)
+
+
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
+                implementation(libs.voyager.tabNavigator)
+                implementation(libs.voyager.screenModel)
+
                 implementation(libs.insetsx)
+
+                implementation(libs.kamel.image)
             }
         }
         val androidMain by getting {
@@ -41,6 +52,7 @@ kotlin {
                 api(libs.appcompat)
                 api(libs.core.ktx)
                 implementation(libs.ktor.client.okhttp)
+                implementation(libs.ui.tooling.preview)
             }
         }
         val iosX64Main by getting
@@ -60,7 +72,7 @@ kotlin {
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "com.myapplication.common"
+    namespace = "com.fairdash.common"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")

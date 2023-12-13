@@ -1,4 +1,4 @@
-package com.myapplication
+package com.fairdash
 
 import MainView
 import android.os.Bundle

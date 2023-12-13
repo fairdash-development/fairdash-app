@@ -2,25 +2,18 @@ package lib
 
 
 fun isEmailInvalid(email: String): Boolean {
-    if(email.isEmpty() || email.contains(" ") || !email.contains("@") || !email.contains(".")) {
-        return true
-    }
-    return false
+    return !("[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+        .toRegex().matches(email))
 }
 
 fun isNameInvalid(name: String): Boolean {
-if(!("^[A-Za-z]+$".toRegex().matches(name)))
-        return true
-    return false
+    return !("^[A-Za-z]+$".toRegex().matches(name))
 }
 
 fun isPhoneNumberInvalid(phoneNumber: String): Boolean {
-    if(phoneNumber.isEmpty() || phoneNumber.contains(" ") || phoneNumber.length != 11 || (phoneNumber.toDoubleOrNull() === null))
-        return true
-    return false
+    return !("[(]?\\d{3}[)]?\\s?-?\\s?\\d{3}\\s?-?\\s?\\d{4}".toRegex()).matches(phoneNumber)
 }
 
 fun isPasswordInvalid(password: String): Boolean {
-    if(password.isEmpty() || password.contains(" ")) return true
-    return false
+    return password.isEmpty() || password.contains(" ")
 }

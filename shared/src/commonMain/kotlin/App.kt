@@ -2,10 +2,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.FadeTransition
+import com.moriatsushi.insetsx.SystemBarsBehavior
+import com.moriatsushi.insetsx.rememberWindowInsetsController
+import screens.LoginScreen
 
 object FairDashColors {
     val WHITE = Color(0xFFEAEAEA)
@@ -18,6 +22,13 @@ object FairDashColors {
 
 @Composable
 fun App() {
+    //need to work on this
+    val windowInsetsController = rememberWindowInsetsController()
+    LaunchedEffect(Unit) {
+        windowInsetsController?.setIsStatusBarsVisible(false)
+        windowInsetsController?.setIsNavigationBarsVisible(false)
+        windowInsetsController?.setSystemBarsBehavior(SystemBarsBehavior.Immersive)
+    }
     Box(modifier = Modifier.background(FairDashColors.BACKGROUND)) {
         MaterialTheme(
             colors = MaterialTheme.colors.copy(
@@ -31,7 +42,7 @@ fun App() {
                 onSurface = FairDashColors.WHITE,
                 error = FairDashColors.ERROR,
                 primaryVariant = FairDashColors.PRIMARY,
-                secondaryVariant = FairDashColors.PRIMARY
+                secondaryVariant = FairDashColors.PRIMARY,  
             )
         )
         {

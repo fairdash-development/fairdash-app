@@ -1,7 +1,6 @@
 package screens
 
 import FairDashColors
-import LoginScreen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,8 +23,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -46,27 +47,29 @@ import lib.isPhoneNumberInvalid
 
 class SignupScreen : Screen {
     override val key = uniqueScreenKey
+    class SignupScreenModel : ScreenModel {
+        var firstName by mutableStateOf("")
+        var isFirstNameInvalid by mutableStateOf(false)
+        var lastName by mutableStateOf("")
+        var isLastNameInvalid by mutableStateOf(false)
+        var email by mutableStateOf("")
+        var isEmailInvalid by mutableStateOf(false)
+        var password by mutableStateOf("")
+        var isPasswordInvalid by mutableStateOf(false)
+        var confirmPassword by mutableStateOf("")
+        var isConfirmPasswordInvalid by mutableStateOf(false)
+        var phoneNumber by mutableStateOf("")
+        var isPhoneNumberInvalid by mutableStateOf(false)
+        var alertIsActive by mutableStateOf(false)
+        var alertType by mutableStateOf(AlertType.ERROR)
+        var alertText by mutableStateOf("")
+        var stage by mutableIntStateOf(0)
+    }
 
     @Composable
     override fun Content() {
-        var firstName by remember { mutableStateOf("") }
-        var isFirstNameInvalid by remember { mutableStateOf(false) }
-        var lastName by remember { mutableStateOf("") }
-        var isLastNameInvalid by remember { mutableStateOf(false) }
-        var email by remember { mutableStateOf("") }
-        var isEmailInvalid by remember { mutableStateOf(false) }
-        var password by remember { mutableStateOf("") }
-        var isPasswordInvalid by remember { mutableStateOf(false) }
-        var confirmPassword by remember { mutableStateOf("") }
-        var isConfirmPasswordInvalid by remember { mutableStateOf(false) }
-        var phoneNumber by remember { mutableStateOf("") }
-        var isPhoneNumberInvalid by remember { mutableStateOf(false) }
-        var alertIsActive by remember { mutableStateOf(false) }
-        var alertType by remember { mutableStateOf(AlertType.ERROR) }
-        var alertText by remember { mutableStateOf("") }
-        var stage by remember { mutableStateOf(0) }
-
         val navigator = LocalNavigator.currentOrThrow
+        val model = navigator.rememberNavigatorScreenModel { SignupScreenModel() }
         val outlinedTextFieldModifiers = Modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp)
@@ -101,8 +104,8 @@ class SignupScreen : Screen {
                     .align(Alignment.TopEnd)
                     .padding(16.dp)
             )
-            AnimatedVisibility(alertIsActive) {
-                Alert(alertType, alertText)
+            AnimatedVisibility(model.alertIsActive) {
+                Alert(model.alertType, model.alertText)
             }
             Column(
                 modifier = Modifier
@@ -118,14 +121,17 @@ class SignupScreen : Screen {
                         modifier = Modifier
                             .padding(16.dp)
                     ) {
-                        AnimatedVisibility(stage > 0) {
+                        AnimatedVisibility(model.stage > 0) {
                             Button(
                                 onClick = {
-                                    stage--
+                                    model.stage--
                                 },
                             ) {
-                                Text(
-                                    text = "Back",
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = "back",
+                                    tint = MaterialTheme.colors.onSurface,
+                                    modifier = Modifier.size(24.dp)
                                 )
                             }
                         }
@@ -138,11 +144,11 @@ class SignupScreen : Screen {
 
                             )
 
-                        AnimatedVisibility(stage == 0) {
+                        AnimatedVisibility(model.stage == 0) {
                             Column {
-                                AnimatedVisibility(isFirstNameInvalid) {
+                                AnimatedVisibility(model.isFirstNameInvalid) {
                                     Text(
-                                        text = if (firstName.isEmpty())
+                                        text = if (model.firstName.isEmpty())
                                             "First name Required"
                                         else
                                             "First name must be valid",
@@ -153,25 +159,25 @@ class SignupScreen : Screen {
                                     )
                                 }
                                 OutlinedTextField(
-                                    value = firstName,
+                                    value = model.firstName,
                                     onValueChange = {
-                                        isFirstNameInvalid = isNameInvalid(it)
-                                        firstName = it
+                                        model.isFirstNameInvalid = isNameInvalid(it)
+                                        model.firstName = it
                                     },
                                     label = {
                                         Text("First Name")
                                     },
                                     placeholder = { Text("John") },
-                                    isError = isFirstNameInvalid,
+                                    isError = model.isFirstNameInvalid,
                                     keyboardOptions = KeyboardOptions(
                                         keyboardType = KeyboardType.Text
                                     ),
                                     colors = outlinedTextFieldColors,
                                     modifier = outlinedTextFieldModifiers
                                 )
-                                AnimatedVisibility(isLastNameInvalid) {
+                                AnimatedVisibility(model.isLastNameInvalid) {
                                     Text(
-                                        text = if (lastName.isEmpty())
+                                        text = if (model.lastName.isEmpty())
                                             "Last name Required"
                                         else
                                             "Last name must be valid",
@@ -182,28 +188,28 @@ class SignupScreen : Screen {
                                     )
                                 }
                                 OutlinedTextField(
-                                    value = lastName,
+                                    value = model.lastName,
                                     onValueChange = {
-                                        isLastNameInvalid = isNameInvalid(it)
-                                        lastName = it
+                                        model.isLastNameInvalid = isNameInvalid(it)
+                                        model.lastName = it
 
                                     },
                                     label = {
                                         Text("Last Name")
                                     },
                                     placeholder = { Text("Doe") },
-                                    isError = isLastNameInvalid,
+                                    isError = model.isLastNameInvalid,
                                     keyboardOptions = KeyboardOptions(
                                         keyboardType = KeyboardType.Text
                                     ),
                                     colors = outlinedTextFieldColors,
                                     modifier = outlinedTextFieldModifiers
                                 )
-                                AnimatedVisibility((firstName.isNotEmpty() && lastName.isNotEmpty()) && (!isFirstNameInvalid && !isLastNameInvalid)) {
+                                AnimatedVisibility((model.firstName.isNotEmpty() && model.lastName.isNotEmpty()) && (!model.isFirstNameInvalid && !model.isLastNameInvalid)) {
                                     Button(
                                         modifier = Modifier.fillMaxWidth(),
                                         onClick = {
-                                            stage = 1
+                                            model.stage = 1
                                         }
                                     ) {
                                         Text(
@@ -214,11 +220,11 @@ class SignupScreen : Screen {
                             }
                         }
 
-                        AnimatedVisibility(stage == 1) {
+                        AnimatedVisibility(model.stage == 1) {
                             Column {
-                                AnimatedVisibility(isEmailInvalid) {
+                                AnimatedVisibility(model.isEmailInvalid) {
                                     Text(
-                                        text = if (email.isEmpty())
+                                        text = if (model.email.isEmpty())
                                             "Email Required"
                                         else
                                             "Email must be valid",
@@ -229,16 +235,16 @@ class SignupScreen : Screen {
                                     )
                                 }
                                 OutlinedTextField(
-                                    value = email,
+                                    value = model.email,
                                     onValueChange = {
-                                        isEmailInvalid = isEmailInvalid(it)
-                                        email = it
+                                        model.isEmailInvalid = isEmailInvalid(it)
+                                        model.email = it
                                     },
                                     label = {
                                         Text("Email")
                                     },
                                     placeholder = { Text("email@provider.com") },
-                                    isError = isEmailInvalid,
+                                    isError = model.isEmailInvalid,
                                     keyboardOptions = KeyboardOptions(
                                         keyboardType = KeyboardType.Email
                                     ),
@@ -246,9 +252,9 @@ class SignupScreen : Screen {
                                     modifier = outlinedTextFieldModifiers
                                 )
 
-                                AnimatedVisibility(isPhoneNumberInvalid) {
+                                AnimatedVisibility(model.isPhoneNumberInvalid) {
                                     Text(
-                                        text = if (phoneNumber.isEmpty())
+                                        text = if (model.phoneNumber.isEmpty())
                                             "Phone Number Required"
                                         else
                                             "Phone Number must be valid",
@@ -259,28 +265,28 @@ class SignupScreen : Screen {
                                     )
                                 }
                                 OutlinedTextField(
-                                    value = phoneNumber,
+                                    value = model.phoneNumber,
                                     onValueChange = {
-                                        isPhoneNumberInvalid =
+                                        model.isPhoneNumberInvalid =
                                             isPhoneNumberInvalid(it)
-                                        phoneNumber = it
+                                        model.phoneNumber = it
                                     },
                                     label = {
                                         Text("Phone Number")
                                     },
                                     placeholder = { Text("12345678901") },
-                                    isError = isPhoneNumberInvalid,
+                                    isError = model.isPhoneNumberInvalid,
                                     keyboardOptions = KeyboardOptions(
                                         keyboardType = KeyboardType.Phone
                                     ),
                                     colors = outlinedTextFieldColors,
                                     modifier = outlinedTextFieldModifiers
                                 )
-                                AnimatedVisibility((email.isNotEmpty() && phoneNumber.isNotEmpty()) && (!isEmailInvalid && !isPhoneNumberInvalid)) {
+                                AnimatedVisibility((model.email.isNotEmpty() && model.phoneNumber.isNotEmpty()) && (!model.isEmailInvalid && !model.isPhoneNumberInvalid)) {
                                     Button(
                                         modifier = Modifier.fillMaxWidth(),
                                         onClick = {
-                                            stage = 2
+                                            model.stage = 2
                                         }
                                     ) {
                                         Text(
@@ -290,11 +296,11 @@ class SignupScreen : Screen {
                                 }
                             }
                         }
-                        AnimatedVisibility(stage == 2) {
+                        AnimatedVisibility(model.stage == 2) {
                             Column {
-                            AnimatedVisibility(isPasswordInvalid) {
+                            AnimatedVisibility(model.isPasswordInvalid) {
                                 Text(
-                                    text = if (password.isEmpty())
+                                    text = if (model.password.isEmpty())
                                         "Password Required"
                                     else
                                         "Password can not contain spaces",
@@ -305,15 +311,15 @@ class SignupScreen : Screen {
                                 )
                             }
                                 OutlinedTextField(
-                                    value = password,
+                                    value = model.password,
                                     onValueChange = {
-                                        isPasswordInvalid = isPasswordInvalid(it)
-                                        password = it
+                                        model.isPasswordInvalid = isPasswordInvalid(it)
+                                        model.password = it
                                     },
                                     label = {
                                         Text("Password")
                                     },
-                                    isError = isPasswordInvalid,
+                                    isError = model.isPasswordInvalid,
                                     keyboardOptions = KeyboardOptions(
                                         keyboardType = KeyboardType.Password
                                     ),
@@ -321,11 +327,11 @@ class SignupScreen : Screen {
                                     colors = outlinedTextFieldColors,
                                     modifier = outlinedTextFieldModifiers
                                 )
-                                AnimatedVisibility(isConfirmPasswordInvalid) {
+                                AnimatedVisibility(model.isConfirmPasswordInvalid) {
                                     Text(
-                                        text = if (confirmPassword.isEmpty())
+                                        text = if (model.confirmPassword.isEmpty())
                                             "Confirm Password Required"
-                                        else if (confirmPassword != password)
+                                        else if (model.confirmPassword != model.password)
                                             "Passwords do not match"
                                         else
                                             "Password can not contain spaces",
@@ -336,16 +342,16 @@ class SignupScreen : Screen {
                                     )
                                 }
                                 OutlinedTextField(
-                                    value = confirmPassword,
+                                    value = model.confirmPassword,
                                     onValueChange = {
-                                        isConfirmPasswordInvalid =
-                                            it != password
-                                        confirmPassword = it
+                                        model.isConfirmPasswordInvalid =
+                                            it != model.password
+                                        model.confirmPassword = it
                                     },
                                     label = {
                                         Text("Confirm Password")
                                     },
-                                    isError = isConfirmPasswordInvalid,
+                                    isError = model.isConfirmPasswordInvalid,
                                     keyboardOptions = KeyboardOptions(
                                         keyboardType = KeyboardType.Password
                                     ),
@@ -353,13 +359,13 @@ class SignupScreen : Screen {
                                     colors = outlinedTextFieldColors,
                                     modifier = outlinedTextFieldModifiers
                                 )
-                                AnimatedVisibility((password.isNotEmpty() && confirmPassword.isNotEmpty()) && (!isPasswordInvalid && !isConfirmPasswordInvalid)) {
+                                AnimatedVisibility((model.password.isNotEmpty() && model.confirmPassword.isNotEmpty()) && (!model.isPasswordInvalid && !model.isConfirmPasswordInvalid)) {
                                     Button(
                                         modifier = Modifier.fillMaxWidth(),
                                         onClick = {
-                                            alertText = "Signup Not Implemented"
-                                            alertType = AlertType.ERROR
-                                            alertIsActive = true
+                                            model.alertText = "Signup Not Implemented"
+                                            model.alertType = AlertType.ERROR
+                                            model.alertIsActive = true
                                         }
                                     ) {
                                         Text(

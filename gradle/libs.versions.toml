@@ -7,18 +7,30 @@ kamel-image = "0.8.3"
 kotlinx-serialization-json = "1.6.1"
 ktor = "2.3.6"
 kotlinx = "1.7.3"
-voyagerVersion = "1.0.0-rc10"
+uiToolingPreview = "1.4.1"
+voyager = "1.0.0"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+
+
 insetsx = { module = "com.moriatsushi.insetsx:insetsx", version.ref = "insetsx" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx" }
-voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyagerVersion" }
-voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyagerVersion" }
+
+ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
+
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
+
+kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamel-image" }
