@@ -50,7 +50,6 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import lib.isEmailInvalid
@@ -67,19 +66,13 @@ object LoginScreen : Screen {
         var password by mutableStateOf("")
         var isEmailInvalid by mutableStateOf(false)
         var isPasswordInvalid by mutableStateOf(false)
-        lateinit var res: HttpResponse
-
-        val client = HttpClient()
-
-        override fun onDispose() {
-            client.close()
-        }
     }
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val model = navigator.rememberNavigatorScreenModel { LoginScreenModel() }
+        val client = HttpClient()
 
         val outlinedTextFieldModifiers = Modifier
             .fillMaxWidth()
@@ -243,10 +236,10 @@ object LoginScreen : Screen {
                                     navigator.push(HomeScreen())
                                     model.screenModelScope.launch {
                                         try {
-                                            model.res = model.client.post("https://google.com")
-                                            if (model.res.status.value != 200) {
+                                            val res = client.post("https://google.com")
+                                            if (res.status.value != 200) {
                                                 model.alertText =
-                                                    if (model.res.status.value == 401) "Invalid Credentials" else "Error ${model.res.status.value}: ${model.res.status.description}"
+                                                    if (res.status.value == 401) "Invalid Credentials" else "Error ${res.status.value}: ${res.status.description}"
                                                 model.alertType = AlertType.ERROR
                                                 model.alertIsActive = true
                                             } else {
@@ -258,6 +251,8 @@ object LoginScreen : Screen {
                                             model.alertText = "$e"
                                             model.alertType = AlertType.ERROR
                                             model.alertIsActive = true
+                                        } finally {
+                                            client.close()
                                         }
                                     }
                                 }

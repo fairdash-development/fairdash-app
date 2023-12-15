@@ -9,7 +9,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.FadeTransition
 import com.moriatsushi.insetsx.SystemBarsBehavior
 import com.moriatsushi.insetsx.rememberWindowInsetsController
-import screens.LoginScreen
+import screens.HomeScreen
 
 object FairDashColors {
     val WHITE = Color(0xFFEAEAEA)
@@ -46,7 +46,7 @@ fun App() {
             )
         )
         {
-            Navigator(LoginScreen) {
+            Navigator(HomeScreen()) {
                 FadeTransition(it)
             }
         }

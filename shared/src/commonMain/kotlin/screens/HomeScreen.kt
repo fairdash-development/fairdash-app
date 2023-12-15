@@ -18,24 +18,26 @@ import tabs.EventsTab
 import tabs.HomeTab
 import tabs.SettingsTab
 
-class HomeScreen: Screen {
+class HomeScreen : Screen {
     override val key = uniqueScreenKey
 
     @Composable
     private fun RowScope.TabNavigationItem(tab: Tab) {
         val tabNavigator = LocalTabNavigator.current
-
         BottomNavigationItem(
             selected = tabNavigator.current == tab,
             onClick = { tabNavigator.current = tab },
-            icon = { tab.options.icon.let {
-                if (it != null) {
-                    Icon(it, contentDescription = tab.options.title)
+            icon = {
+                tab.options.icon.let {
+                    if (it != null) {
+                        Icon(it, contentDescription = tab.options.title)
+                    }
                 }
-            } },
+            },
             label = { Text(tab.options.title) },
         )
     }
+
     @Composable
     override fun Content() {
         TabNavigator(HomeTab) {
@@ -54,6 +56,4 @@ class HomeScreen: Screen {
             )
         }
     }
-
-
 }

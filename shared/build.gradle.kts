@@ -52,7 +52,6 @@ kotlin {
                 api(libs.appcompat)
                 api(libs.core.ktx)
                 implementation(libs.ktor.client.okhttp)
-                implementation(libs.ui.tooling.preview)
             }
         }
         val iosX64Main by getting
