@@ -111,21 +111,21 @@ object HomeTab : Tab {
         val factory: PermissionsControllerFactory = rememberPermissionsControllerFactory()
         val permissionsController: PermissionsController =
             remember(factory) { factory.createPermissionsController() }
-        LaunchedEffect(Unit) {
-            try {
-                permissionsController.providePermission(Permission.LOCATION)
-            } catch (deniedAlways: DeniedAlwaysException) {
-                model.isLocationDisabled = true
-            } catch (denied: DeniedException) {
-                model.isLocationDisabled = true
-            }
-
-            if(permissionsController.isPermissionGranted(Permission.LOCATION)) {
-                model.weatherData = HttpManager.getWeather(52.4, 54.6)
-            } else {
-                model.isLocationDisabled = true
-            }
-        }
+//        LaunchedEffect(Unit) {
+//            try {
+//                permissionsController.providePermission(Permission.LOCATION)
+//            } catch (deniedAlways: DeniedAlwaysException) {
+//                model.isLocationDisabled = true
+//            } catch (denied: DeniedException) {
+//                model.isLocationDisabled = true
+//            }
+//
+//            if(permissionsController.isPermissionGranted(Permission.LOCATION)) {
+//                model.weatherData = HttpManager.getWeather(52.4, 54.6)
+//            } else {
+//                model.isLocationDisabled = true
+//            }
+//        }
         AnimatedVisibility(model.weatherData.hourly.temperature.isNotEmpty() || model.isLocationDisabled) {
             Card(
                 modifier = modifier
