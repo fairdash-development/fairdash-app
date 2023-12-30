@@ -14,6 +14,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
@@ -48,7 +49,7 @@ fun Alert(type: AlertType, text: String) {
         ) {
             Icon(
                 imageVector = when (type) {
-                    AlertType.ERROR -> Icons.Default.Close
+                    AlertType.ERROR -> Icons.Default.Error
                     AlertType.INFO -> Icons.Default.Info
                     AlertType.WARNING -> Icons.Default.Warning
                 },

@@ -1,4 +1,4 @@
-package tabs
+package screens.home.tabs
 
 import FairDashColors
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.ManageAccounts
@@ -94,6 +95,7 @@ object SettingsTab : Tab {
             Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
                 SettingsItem("Manage Account", Icons.Default.ManageAccounts)
                 SettingsItem("Delivery Location", Icons.Default.MyLocation)
+                SettingsItem("Weather Preferences", Icons.Default.Cloud)
                 SettingsItem("Billing Information", Icons.Default.ReceiptLong)
                 SettingsItem("Notifications", Icons.Default.Notifications)
                 SettingsItem("Privacy", Icons.Default.PrivacyTip)

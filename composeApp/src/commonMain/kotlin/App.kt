@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.FadeTransition
-import screens.HomeScreen
+import screens.home.HomeScreen
 
 object FairDashColors {
     val WHITE = Color(0xFFEAEAEA)
@@ -19,7 +19,6 @@ object FairDashColors {
 
 @Composable
 fun App() {
-
     Box(modifier = Modifier.background(FairDashColors.BACKGROUND)) {
         MaterialTheme(
             colors = MaterialTheme.colors.copy(

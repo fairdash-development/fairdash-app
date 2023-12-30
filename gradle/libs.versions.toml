@@ -9,10 +9,11 @@ androidx-activityCompose = "1.8.2"
 compose-plugin = "1.5.11"
 kotlin = "1.9.21"
 insetter = "0.6.1"
+permissions = "0.17.0"
 voyager = "1.0.0"
 kamel-image = "0.8.3"
 ktor = "2.3.6"
-kotlinx-serialization-json = "1.6.1"
+kotlinx-serialization-json = "1.6.2"
 kotlinx = "1.7.3"
 
 [libraries]
@@ -37,6 +38,9 @@ voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", v
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamel-image" }
+
+permissions = { module = "dev.icerock.moko:permissions", version.ref = "permissions" }
+permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "permissions" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

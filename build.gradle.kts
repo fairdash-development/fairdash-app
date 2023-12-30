@@ -8,7 +8,9 @@ plugins {
 
 }
 
-repositories {
-    google()
-    mavenCentral()
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }

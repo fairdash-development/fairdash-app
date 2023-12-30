@@ -1,10 +1,11 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.kotlin.gradle.plugin.sources.dependsOnClosure
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization") version "1.9.21"
 }
 
 kotlin {
@@ -55,6 +56,8 @@ kotlin {
 
             implementation(libs.kamel.image)
 
+            implementation(libs.permissions)
+            implementation(libs.permissions.compose)
         }
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
@@ -63,9 +66,11 @@ kotlin {
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+
         }
     }
 }
+
 
 android {
     namespace = "org.fairdash.app"

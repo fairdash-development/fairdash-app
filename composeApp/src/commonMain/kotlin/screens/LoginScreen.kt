@@ -53,6 +53,7 @@ import io.ktor.client.request.post
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import lib.isEmailInvalid
+import screens.home.HomeScreen
 
 
 object LoginScreen : Screen {
